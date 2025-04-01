@@ -36,6 +36,10 @@ export component AppWindow inherits Window {
                     text: "3";
                     clicked =>{ number_click(3); }
                 }
+                Button{
+                    text: "+";
+                    clicked =>{ operator-click("+"); }
+                }
             }
             Row{
                 Button{
@@ -50,6 +54,10 @@ export component AppWindow inherits Window {
                     text: "6";
                     clicked =>{ number_click(6); }
                 }
+                Button{
+                    text: "-";
+                    clicked =>{ operator-click("-"); }
+                }
             }
             Row{        
                 Button{
@@ -63,6 +71,10 @@ export component AppWindow inherits Window {
                 Button{
                     text: "9";
                     clicked =>{ number_click(9); }
+                }
+                Button{
+                    text: "/";
+                    clicked =>{ operator-click("/"); }
                 }
             }
 
@@ -79,29 +91,17 @@ export component AppWindow inherits Window {
                     text: "=";
                     clicked =>{ operator-click("="); }
                 }
+                Button{
+                    text: "*";
+                    clicked =>{ operator-click("*"); }
+                }
             }
 
 
-            Button{
-                text: "+";
-                row:0;col:4;
-                clicked =>{ operator-click("+"); }
-            }
-            Button{
-                text: "-";
-                row:1;col:4;
-                clicked =>{ operator-click("-"); }
-            }
-            Button{
-                text: "/";
-                row:2;col:4;
-                clicked =>{ operator-click("/"); }
-            }
-            Button{
-                text: "*";
-                row:3;col:4;
-                clicked =>{ operator-click("*"); }
-            }
+
+
+
+
         }
 
         popup := PopupWindow {
