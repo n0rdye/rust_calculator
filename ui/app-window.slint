@@ -1,0 +1,132 @@
+import { Button, VerticalBox,StandardButton } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    in-out property <string> result; 
+
+    callback number-click(int);
+    callback operator-click(string);
+
+
+    width: 315px;
+    height: 300px;    
+
+    VerticalBox {
+
+        HorizontalLayout{
+            Text {
+                text: "\{root.result}";
+                font-size:30pt;
+                horizontal-alignment: center;
+            }
+        }
+
+        GridLayout {
+            height: 70%;
+            Row{
+                Button{
+                    text: "1";
+                    clicked =>{ number_click(1); }
+
+                }
+                Button{
+                    text: "2";
+                    clicked =>{ number_click(2); }
+                }
+                Button{
+                    text: "3";
+                    clicked =>{ number_click(3); }
+                }
+            }
+            Row{
+                Button{
+                    text: "4";
+                    clicked =>{ number_click(4); }
+                }
+                Button{
+                    text: "5";
+                    clicked =>{ number_click(5); }
+                }
+                Button{
+                    text: "6";
+                    clicked =>{ number_click(6); }
+                }
+            }
+            Row{        
+                Button{
+                    text: "7";
+                    clicked =>{ number_click(7); }
+                }
+                Button{
+                    text: "8";
+                    clicked =>{ number_click(8); }
+                }
+                Button{
+                    text: "9";
+                    clicked =>{ number_click(9); }
+                }
+            }
+
+            Row{        
+                Button{
+                    text: "c";
+                    clicked =>{ operator-click("c"); }
+                }
+                Button{
+                    text: "0";
+                    clicked =>{ number_click(0); }
+                }
+                Button{
+                    text: "=";
+                    clicked =>{ operator-click("="); }
+                }
+            }
+
+
+            Button{
+                text: "+";
+                row:0;col:4;
+                clicked =>{ operator-click("+"); }
+            }
+            Button{
+                text: "-";
+                row:1;col:4;
+                clicked =>{ operator-click("-"); }
+            }
+            Button{
+                text: "/";
+                row:2;col:4;
+                clicked =>{ operator-click("/"); }
+            }
+            Button{
+                text: "*";
+                row:3;col:4;
+                clicked =>{ operator-click("*"); }
+            }
+        }
+
+        popup := PopupWindow {
+            x: ((root.width / 2)-popup.width/2);
+            y: ((root.height / 2)-popup.height/2);
+            width: min(confirm_popup_layout.preferred-width, root.width - 80px);
+            Rectangle{
+                background: Colors.gray;
+                width: 100%;
+                height: 100%;
+            }
+            confirm_popup_layout := Dialog {
+                height:100%; width: 100%;
+
+                confirm_popup_text := Text {
+                    text: "Some items are not done, are you sure you wish to quit?";
+                    wrap: word-wrap;
+                }
+
+                StandardButton { kind: yes; 
+                    clicked() => {
+                        debug("Button clicked");
+                    }} 
+                StandardButton { kind: no; } 
+            }
+        }
+    }
+}
