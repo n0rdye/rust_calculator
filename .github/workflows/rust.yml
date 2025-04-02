@@ -40,7 +40,6 @@ jobs:
           strip: true
       - name: Publish artifacts and release
         uses: ncipollo/release-action@v1
-        run: rm target/${{ matrix.platform.target }}/release/slint_calc.d
         with:
           artifacts: "target/${{ matrix.platform.target }}/release/slint_calc.exe,target/${{ matrix.platform.target }}/release/slint_calc"
           tag: ${{ github.ref }}
