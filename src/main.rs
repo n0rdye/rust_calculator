@@ -54,9 +54,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                 match String::as_str(&String::from(string)) {
                     "=" => {
-                        let mut last_num: Option<i32> = None; // Initialize last_num as None
-                        let mut m2: Vec<String> = opers.iter().rev().cloned().collect(); // Collect owned strings
-                        let mut sum: i32 = 0; // Initialize `sum`
+                        let mut last_num: Option<i32> = None;
+                        let mut m2: Vec<String> = opers.iter().rev().cloned().collect();
+                        let mut sum: i32 = 0;
                         #[cfg(debug_assertions)]{dbg!(&m2);}
                         while let Some(num) = m2.pop() {
                             match String::as_str(&num) {
@@ -65,7 +65,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                                         if let Some(next_num) = m2.pop() {
                                             let next_value = get_i32(&next_num);
                                             sum = value + next_value;
-                                            last_num = Some(sum); // Update last_num to new sum
+                                            last_num = Some(sum); 
                                         }
                                     }
                                     #[cfg(debug_assertions)] dbg!(&m2);
@@ -105,14 +105,12 @@ fn main() -> Result<(), Box<dyn Error>> {
                                     #[cfg(debug_assertions)] dbg!(&m2);
                                 }
                                 _ => {
-                                    // Treat num as a number if it's not an operator
                                     let current_value = get_i32(&num);
-                                    last_num = Some(current_value); // Store current number as last_num
+                                    last_num = Some(current_value); 
                                     #[cfg(debug_assertions)] dbg!(&m2);
                                 }
                             }
-                            // m2.push(sum.to_string());
-
+                            #[cfg(debug_assertions)] dbg!(&opers);
                         }
 
                         opers.clear();
