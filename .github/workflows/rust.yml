@@ -39,7 +39,7 @@ jobs:
           args: "--release"
           strip: true
       - name: Publish artifacts and release
-        uses: ncipollo/release-action@v1
+      - uses: actions/checkout@v4
+      - uses: ncipollo/release-action@v1
         with:
           artifacts: "target/${{ matrix.platform.target }}/release/slint_calc"
-          tag: ${{ github.ref_name }}
