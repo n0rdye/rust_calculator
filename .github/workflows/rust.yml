@@ -43,4 +43,6 @@ jobs:
         with:
           artifacts: "target/${{ matrix.platform.target }}/release/slint_calc"
           tag: ${{ github.ref }}
+<<<<<<< HEAD
           name: Release ${{ github.ref }}
+>>>>>>> 22dd0dc9e8ac20bbdc34fbf3b630f2b4e02dcef4
