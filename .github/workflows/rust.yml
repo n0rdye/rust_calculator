@@ -45,5 +45,3 @@ jobs:
           tag: ${{ github.ref }}
           name: Release ${{ github.ref }}
           allowUpdates: true
-
-# test
