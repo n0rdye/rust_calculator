@@ -6,8 +6,6 @@ on:
     - 'v*'
     # branches: [ "main" ]
 
-    # new test
-
 env:
   CARGO_TERM_COLOR: always
   
