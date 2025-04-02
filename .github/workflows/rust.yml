@@ -42,6 +42,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "target/${{ matrix.platform.target }}/release/slint_calc.exe,target/${{ matrix.platform.target }}/release/slint_calc"
-          tag: ${{ github.ref }}
+          tag: "${{ github.ref }}-${{ matrix.platform.target }}"
           name: Release ${{ github.ref }}
           allowUpdates: true
