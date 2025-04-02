@@ -48,6 +48,6 @@ Get them here (https://github.com/n0rdye/rust_calculator/releases)
 
 ## Bugs/todo
 
-need to remake calculation function - all callculations as in closures;
+- [x] need to remake calculation function - all callculations as in closures;
 
-if value isn't inserted so if prints zero in array its error so error - num results in zero;
+- [] if value isn't inserted so if prints zero in array its error so error - num results in zero;
