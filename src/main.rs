@@ -37,17 +37,16 @@ fn main() -> Result<(), Box<dyn Error>> {
                 }
 
             }
+            #[cfg(debug_assertions)] dbg!(&opers);
 
             print_to_slint(window, opers.to_vec());
         }
     });
 
-
     // operator click scope
     ui.on_operator_click({
             let weak_ui = ui.as_weak();
             let opers = Rc::clone(&opers);
-
             move |string|{
                 let mut opers = opers.borrow_mut();
                 let window = weak_ui.unwrap();
@@ -55,45 +54,65 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                 match String::as_str(&String::from(string)) {
                     "=" => {
-                        let mut sum: i32 = 0;
-                        let mut i=0;
-                        let mut m2: Vec<&String> = opers.iter().rev().collect();
+                        let mut last_num: Option<i32> = None; // Initialize last_num as None
+                        let mut m2: Vec<String> = opers.iter().rev().cloned().collect(); // Collect owned strings
+                        let mut sum: i32 = 0; // Initialize `sum`
+                        #[cfg(debug_assertions)]{dbg!(&m2);}
                         while let Some(num) = m2.pop() {
-                            let sum = &mut sum;
                             match String::as_str(&num) {
                                 "+" => {
-                                    let num: i32 = get_i32(&opers[i+1]);
-                                    let last_num: i32 = get_i32(&opers[i-1]);
-                                    *sum = last_num + num;
-                                    dbg!(sum);
+                                    if let Some(value) = last_num {
+                                        if let Some(next_num) = m2.pop() {
+                                            let next_value = get_i32(&next_num);
+                                            sum = value + next_value;
+                                            last_num = Some(sum); // Update last_num to new sum
+                                        }
+                                    }
+                                    #[cfg(debug_assertions)] dbg!(&m2);
                                 }
                                 "-" => {
-                                    let num: i32 = get_i32(&opers[i+1]);
-                                    let last_num: i32 = get_i32(&opers[i-1]);
-                                    *sum = last_num - num;
-                                    dbg!(sum);
+                                    if let Some(value) = last_num {
+                                        if let Some(next_num) = m2.pop() {
+                                            let next_value = get_i32(&next_num);
+                                            sum = value - next_value;
+                                            last_num = Some(sum);
+                                        }
+                                    }
+                                    #[cfg(debug_assertions)] dbg!(&m2);
                                 }
                                 "*" => {
-                                    let num: i32 = get_i32(&opers[i+1]);
-                                    let last_num: i32 = get_i32(&opers[i-1]);
-                                    *sum = last_num * num;
-                                    dbg!(sum);
+                                    if let Some(value) = last_num {
+                                        if let Some(next_num) = m2.pop() {
+                                            let next_value = get_i32(&next_num);
+                                            sum = value * next_value;
+                                            last_num = Some(sum);
+                                        }
+                                    }
+                                    #[cfg(debug_assertions)] dbg!(&m2);
                                 }
                                 "/" => {
-                                    let num: i32 = get_i32(&opers[i+1]);
-                                    let last_num: i32 = get_i32(&opers[i-1]);
-                                    if *sum != 0 || num != 0{
-                                        *sum = last_num / num;
-                                    } 
-                                    dbg!(sum);
+                                    if let Some(value) = last_num {
+                                        if let Some(next_num) = m2.pop() {
+                                            let next_value = get_i32(&next_num);
+                                            if next_value != 0 {
+                                                sum = value / next_value;
+                                                last_num = Some(sum);
+                                            } else {
+                                                dbg!("Attempt to divide by zero");
+                                            }
+                                        }
+                                    }
+                                    #[cfg(debug_assertions)] dbg!(&m2);
                                 }
-                                "0"=>{
-                                    let num: i32 = get_i32(num);
-                                    *sum = num;
+                                _ => {
+                                    // Treat num as a number if it's not an operator
+                                    let current_value = get_i32(&num);
+                                    last_num = Some(current_value); // Store current number as last_num
+                                    #[cfg(debug_assertions)] dbg!(&m2);
                                 }
-                                _=>{print!("none")}
                             }
-                            i+=1;
+                            // m2.push(sum.to_string());
+
                         }
 
                         opers.clear();
@@ -111,6 +130,8 @@ fn main() -> Result<(), Box<dyn Error>> {
                         print_to_slint(window, opers.to_vec());
                     }
                 }
+            #[cfg(debug_assertions)] dbg!(&opers);
+
             }
         }); 
 
