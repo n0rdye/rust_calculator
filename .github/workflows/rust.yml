@@ -4,7 +4,7 @@ on:
   push:
     tags:
     - 'v*'
-    # branches: [ "main" ]
+    branches: [ "main" ]
 
 env:
   CARGO_TERM_COLOR: always
@@ -20,10 +20,10 @@ jobs:
             target: x86_64-unknown-linux-musl
             command: build
 
-          # - os-name: Windows-x86_64
-          #   runs-on: windows-latest
-          #   target: x86_64-pc-windows-gnu
-          #   command: build
+          - os-name: Windows-x86_64
+            runs-on: windows-latest
+            target: x86_64-pc-windows-gnu
+            command: build
 
     runs-on: ${{ matrix.platform.runs-on }}
     permissions:
@@ -41,6 +41,6 @@ jobs:
       - name: Publish artifacts and release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "target/${{ matrix.platform.target }}/release/slint_calc"
+          artifacts: "target/${{ matrix.platform.target }}/release/^(slint_calc\.exe|slint_calc)$"
           tag: ${{ github.ref }}
           name: Release ${{ github.ref }}
