@@ -44,3 +44,5 @@ jobs:
           artifacts: "target/${{ matrix.platform.target }}/release/slint_calc.exe,target/${{ matrix.platform.target }}/release/slint_calc"
           tag: ${{ github.ref }}
           name: Release ${{ github.ref }}
+
+# test
