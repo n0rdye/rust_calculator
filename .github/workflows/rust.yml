@@ -2,6 +2,8 @@ name: Rust
 
 on:
   push:
+    tags:
+    - 'v*'
     branches: [ "main" ]
 
 env:
@@ -18,12 +20,14 @@ jobs:
             target: x86_64-unknown-linux-musl
             command: build
 
-          - os-name: Windows-x86_64
-            runs-on: windows-latest
-            target: x86_64-pc-windows-gnu
-            command: build
+          # - os-name: Windows-x86_64
+          #   runs-on: windows-latest
+          #   target: x86_64-pc-windows-gnu
+          #   command: build
 
     runs-on: ${{ matrix.platform.runs-on }}
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +39,6 @@ jobs:
           args: "--release"
           strip: true
       - name: Publish artifacts and release
-        uses: houseabsolute/actions-rust-release@v0
+        uses: ncipollo/release-action@v1
         with:
-          executable-name: ubi
-          target: ${{ matrix.platform.target }}
+          artifacts: "target/release/slint_calc"
